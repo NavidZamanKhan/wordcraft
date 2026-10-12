@@ -11,9 +11,11 @@ fn mcp_help_flag_prints_usage_and_options() {
     let stdout = String::from_utf8_lossy(&out.stdout);
     assert!(stdout.contains("wordcraft-cli mcp — MCP server on stdio"));
     assert!(stdout.contains("USAGE:"));
-    assert!(stdout.contains("wordcraft-cli mcp [--connect HOST:PORT | --author NAME]"));
+    assert!(stdout.contains("wordcraft-cli mcp [--connect HOST:PORT | --author NAME] [--automation-read-root DIR] [--automation-write-root DIR]"));
     assert!(stdout.contains("--connect HOST:PORT"));
     assert!(stdout.contains("--author NAME"));
+    assert!(stdout.contains("--automation-read-root DIR"));
+    assert!(stdout.contains("--automation-write-root DIR"));
     assert!(stdout.contains("-h, --help"));
     let stderr = String::from_utf8_lossy(&out.stderr);
     assert!(stderr.is_empty(), "unexpected stderr: {stderr}");
