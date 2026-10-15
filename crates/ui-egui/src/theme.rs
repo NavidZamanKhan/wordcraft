@@ -967,9 +967,11 @@ mod tests {
         })
         .drop_without_applying_deltas();
 
-        // Verify glyph availability for heading characters
-        let font = super::regular(14.0);
-        let missing: Vec<char> = ctx.fonts_mut(|f| "第一章 项目概况".chars().filter(|c| !f.has_glyph(&font, *c)).collect());
-        assert!(missing.is_empty(), "missing glyphs for heading: {missing:?}");
+        // Verify glyph availability when native PingFang SC or bundled CJK fonts are available (#1969).
+        if (cfg!(target_os = "macos") && wordcraft_fonts::macos_pingfang_sc_ui_font().is_some()) || !wordcraft_fonts::ui_cjk_fonts(false).is_empty() {
+            let font = super::regular(14.0);
+            let missing: Vec<char> = ctx.fonts_mut(|f| "第一章 项目概况".chars().filter(|c| !f.has_glyph(&font, *c)).collect());
+            assert!(missing.is_empty(), "missing glyphs for heading: {missing:?}");
+        }
     }
 }
