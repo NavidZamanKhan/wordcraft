@@ -539,8 +539,10 @@ pub fn font_definitions_language_full(prefer_hans: bool, prefer_korean: bool, si
         data.index = f.index;
         add_cjk(&mut fonts, format!("system {}", f.family), data);
     }
+    #[cfg(not(target_os = "macos"))]
+    let _ = simplified_chinese;
     #[cfg(target_arch = "wasm32")]
-    let _ = (simplified_chinese, system_cjk);
+    let _ = system_cjk;
     // Symbols and emoji fall back to egui's defaults (kept in the families).
     fonts
 }
